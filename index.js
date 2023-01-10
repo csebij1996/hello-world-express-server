@@ -2,19 +2,14 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(function (req, res, next) {
+app.get('/', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    next();
+    res.send('Na végre sikerült! :)');
 });
-
-app.get('/', (req, res) => {
-    res.send('Na mégegyszer!');
-})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
