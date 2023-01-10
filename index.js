@@ -8,7 +8,12 @@ app.get('/', function(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    res.send('Na végre sikerült! :)');
+    let proba = {
+        name: 'Csébi János',
+        age: 26
+    }
+
+    res.send(JSON.stringify(proba));
 });
 
 app.listen(port, () => {
