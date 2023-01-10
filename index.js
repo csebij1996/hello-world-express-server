@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    res.send('Helló világ!');
+    res.send('Na mégegyszer!');
 })
 
 app.listen(port, () => {
