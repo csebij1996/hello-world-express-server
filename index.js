@@ -13,7 +13,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello world!');
+    res.send('Na végre kész!');
 })
 
 app.listen(port, () => {
