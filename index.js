@@ -119,7 +119,7 @@ app.delete('/products/:egyediAzonosito', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
-    res.setHeader('Access-Control-Allow-Credentials', false); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
     
     const id = req.params.egyediAzonosito;
 
