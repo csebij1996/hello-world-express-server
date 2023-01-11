@@ -30,7 +30,7 @@ function render() {
             deleteBtn.onclick = async (event) => {
                 const id = event.target.dataset.id;
 
-                const response = await fetch(`/products/${id}`, {
+                const response = await fetch(`https://teal-cheerful-toad.cyclic.app/products/${id}`, {
                     method: 'delete'
                 })
 
