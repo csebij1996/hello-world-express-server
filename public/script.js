@@ -1,119 +1,138 @@
-let state = {
-    products: [],
-    editedId: ''
-}
-
-window.onload = render();
-
-function render() {
-
-    fetch('/products')
-    .then(response => response.json())
-    .then(response => {
-        state.products = response;
-
-        let productsHTML = '';
-        for(let product of state.products) {
-            productsHTML += `
-            <div class="product">
-                <h3>${product.name}</h3>
-                <span>${product.price} ft</span>
-                <input type="button" value="szerkesztés" class="updateBtn" data-id=${product.id}>
-                <input type="button" value="törlés" class="deleteBtn" data-id=${product.id}>
-            </div>
-            `;
-        }
-        document.querySelector('.products').innerHTML = productsHTML;
-
-        //delete
-        for(let deleteBtn of document.querySelectorAll('.deleteBtn')) {
-            deleteBtn.onclick = async (event) => {
-                const id = event.target.dataset.id;
-
-                const response = await fetch(`https://teal-cheerful-toad.cyclic.app/products/${id}`, {
-                    method: 'delete'
-                })
-
-                if(!response.ok) {
-                    alert('Törlés sikertelen');
-                    return;
-                }
-
-                render();
-
-            }
-        }
-
-        //create
-        document.getElementById('create').onsubmit = async (event) => {
-            event.preventDefault();
-            const name = event.target.elements.name.value;
-            const price = Number(event.target.elements.price.value);
-            const isInStock = Boolean(event.target.elements.isInStock.checked);
-        
-            let body = {
-                name: name,
-                price: price,
-                isInStock: isInStock
-            }
-
-            const newProduct = await fetch('/products', {
-                method: 'post',
-                body: JSON.stringify(body),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
-
-            console.log(newProduct);
-            render();
-        }
-
-        //update
-        for(let editBtn of document.querySelectorAll('.updateBtn')) {
-            editBtn.onclick = (event) => {
-                state.editedId = event.target.dataset.id;
-                renderEdit();
-            }
-        }
-
-
-    })
-}
-
-function renderEdit() {
-    let editHTML = '';
-    for(let product of state.products) {
-        if(product.id===state.editedId) {
-            editHTML += `
-            <form id="edit">
-                <input type="text" name="name" placeholder="név" value="${product.name}">
-                <input type="number" name="price" placeholder="ár" value="${product.price}">
-                <input type="checkbox" name="isInStock" ${product.isInStock ? 'checked' : ''}> Van raktáron?
-                <input type="submit" value="szerkeszt">
-            </form>
-            `;
-        }
+const state = {
+    cars: [],
+    selectedCarId: '',
+  };
+  
+  window.onload = fetchAndRenderCars;
+  
+  document.getElementById('create-car-component').onsubmit = async function (event) {
+    event.preventDefault();
+    const name = event.target.elements.name.value;
+    const licenseNumber = event.target.elements.licenseNumber.value;
+    const hourlyRate = parseFloat(event.target.elements.hourlyRate.value);
+  
+  await fetch('/cars', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        licenseNumber: licenseNumber,
+        hourlyRate: hourlyRate,
+      }),
+    });
+    fetchAndRenderCars();
+  };
+  
+  async function fetchAndRenderCars() {
+    document.getElementById('car-list-component').innerHTML = `
+                  <div class="spinner-border m-auto" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>`;
+    let cars;
+    try {
+      cars = await fetch('/cars').then((res) => (res.ok ? res.json() : Promise.reject()));
+    } catch (e) {
+      alert('Szerver hiba');
+      return;
     }
-    document.querySelector('.update-product').innerHTML = editHTML;
-
-    document.getElementById('edit').onsubmit = async (event) => {
-        event.preventDefault();
-        let editProduct = {
-            name: event.target.elements.name.value,
-            price: Number(event.target.elements.price.value),
-            isInStock: Boolean(event.target.elements.isInStock.value)
-        }
-        const res = await fetch(`/products/${state.editedId}`, {
-            method: 'put',
-            body: JSON.stringify(editProduct),
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-        state.editedId='';
-        document.querySelector('.update-product').innerHTML = '';
-        render();
+  
+    state.cars = cars;
+    renderCars();
+  }
+  
+  function renderCars() {
+    let carsHTML = '';
+    for (const car of state.cars) {
+      carsHTML += `
+          <li class="list-group-item cursor-pointer car-list-item ${state.selectedCarId === car._id ? 'active' : ''}" 
+              data-carid="${car._id}"
+          >
+                  <p>${car.name}</p>
+                  <p>${car.licenseNumber}</p>
+                  <p>${car.hourlyRate}</p>
+          </li>
+          `;
     }
-
-}
+  
+    document.getElementById('car-list-component').innerHTML = `
+        <ul
+        class="list-group border"
+        style="height: calc(100vh - 250px); overflow-y: scroll;"
+        >
+            ${carsHTML}
+        </ul>
+    `;
+  
+    const listItems = document.querySelectorAll('.car-list-item');
+    for (const item of listItems) {
+      item.onclick = function (event) {
+        const listItem = event.target.closest('.car-list-item');
+  
+        const id = listItem.dataset.carid;
+        const foundCarById = state.cars.find((car) => car._id === id);
+        state.selectedCarId = id;
+        renderTrips(foundCarById);
+        Array.from(document.querySelectorAll('.car-list-item')).forEach((el) => {
+          if (el.dataset.carid === state.selectedCarId) {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        });
+      };
+    }
+  }
+  
+  function renderTrips(car) {
+    document.getElementById('trip-list-component').innerHTML = `
+          <h3>Trips:</h3>
+          <ul style="height: calc(100vh - 250px); overflow-y: scroll;">
+            ${car.trips.reduce(
+              (aggregatedTemplate, trip) =>
+                aggregatedTemplate +
+                `
+                  <li class="list-group-item">
+                      <h3>${moment(trip.date * 1000).format('YYYY-MM-DD, h:mm a')}</h3>
+                      <p>${trip.numberOfMinutes}</p>
+                  </li>
+              `,
+              ''
+            )}
+            <li class="list-group-item">
+                <form id="create-trip">
+                <label class="w-100">
+                    Menetidő (perc):
+                    <input
+                    type="number"
+                    name="numberOfMinutes"
+                    class="form-control"
+                    />
+                </label>
+                <button class="btn btn-outline-success">Mentés</button>
+                </form>
+            </li>
+          </ul>
+      `;
+  
+    document.getElementById('create-trip').onsubmit = async function (event) {
+      event.preventDefault();
+      const numberOfMinutes = event.target.elements.numberOfMinutes.value;
+      await fetch('/trips', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          numberOfMinutes: numberOfMinutes,
+          carId: state.selectedCarId,
+        }),
+      });
+  
+      await fetchAndRenderCars();
+      event.target.reset();
+      const foundCarById = state.cars.find((car) => car._id === state.selectedCarId);
+      renderTrips(foundCarById);
+    };
+  }
