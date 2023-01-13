@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munka naptár</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<div class="fejlec">
+    <i class="fa-solid fa-arrow-left nyil" id="balnyil"></i>
+    <div class="honap">
+        <span id="honapnev" style="letter-spacing: 10px;"></span>
+    </div>
+    <i class="fa-solid fa-arrow-right nyil" id="jobbnyil"></i>
+</div>
+
+<div class="adat">
+    <div class="bejelentett"></div>
+    <div class="mini"></div>
+</div>
+
+<div class="info">
+</div>
+
+<div class="alja">
+    <div class="new">Új munkaidő felvétel</div>
+</div>
+
+<form class="ujfelvetel">
+    <div>
+        <input type="radio" name="type" value="kul" checked> Főállás
+        <input type="radio" name="type" value="job"> Mellékállás
+    </div>
+    <input type="date" name="datum">
+    <input type="text" name="ora" placeholder="hány óra?">
+    <input type="submit" value="felvétel" class="btn">
+    <i class="fa fa-times kilep"></i>
+</form>
+
+</body>
+</html>

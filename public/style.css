@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin:0; padding:0;
+    border:none;
+    transition: all .2s linear;
+}
+
+body{
+    background:lightgoldenrodyellow;
+}
+
+.adat{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top:20px;
+    font-size:14px;
+    margin-left:15px;
+    margin-right:15px;
+}
+.adat .bejelentett {
+    display:flex;
+}
+.adat .bejelentett div{
+    width:20px;
+    height:20px;
+    background:white;
+    margin-right:10px;
+    border:1px solid black;
+}
+.adat .mini {
+    display:flex;
+}
+.adat .mini div{
+    width:20px;
+    height:20px;
+    background:rgb(253, 255, 151);
+    margin-right:10px;
+    border:1px solid black;
+}
+
+.fejlec{
+    background:chocolate;
+    color:white;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:20px;
+    box-shadow: 0px 2px 15px rgba(0,0,0,.5);
+}
+
+.honap{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.nyil{
+    font-weight:bold;
+    background: coral;
+    padding:10px;
+    border-radius:50%;
+    border:1px solid white;
+}
+
+.info{
+    margin:10px;
+    margin-top:30px;
+    display:flex;
+    flex-direction: column;
+}
+
+.egy {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size:13px;
+    background:#fff;
+    margin-top:10px;
+    padding:10px 20px;
+    box-shadow: 0px 1px 5px black;
+    border-radius:20px;
+}
+
+.egy .datum{
+    font-weight:bold;
+}
+
+.link{
+    text-decoration: none;
+    color:rgb(246, 201, 250);
+    font-weight:bold;
+    text-align:center;
+    margin-top:10px;
+    font-size:12px
+}
+
+.alja{
+    position: fixed;
+    bottom:0;
+    width:100%;
+}
+
+.alja .new{
+    font-size:17px;
+    text-align: center;
+    padding:10px;
+    font-weight:bold;
+    background:chocolate;
+    color:white;
+    cursor:pointer;
+    box-shadow:0px -5px 15px rgba(0,0,0,.5);
+}
+
+.ujfelvetel{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background:rgba(0,0,0,.8);
+    position:fixed;
+    top:-110%; left:0;
+    z-index:1001;
+    width:100%;
+    height:100%;
+}
+
+.ujfelvetel div{
+    color:white;
+    display:flex;
+    width:80%;
+    margin-bottom:15px;
+}
+
+.ujfelvetel div input{
+    margin-right:2px;
+}
+
+.ujfelvetel input{
+    width:80%;
+    font-size:15px;
+    padding:10px;
+    margin-bottom:5px;
+}
+
+.ujfelvetel .btn{
+    background:black;
+    color:white;
+    font-weight:bold;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.kilep{
+    position:fixed;
+    top:-110%;
+    right:15px;
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+}
+
+.megjelenit {
+    top:0;
+}
+
+.torles-ell{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position:fixed;
+    top:-110%; left:0;
+    background: rgba(0,0,0,.9);
+    z-index:1000;
+    height:100%;
+    width:100%;
+}
+
+.active{
+    left:0;
+}
+
+.keret{
+    background: #fff;
+    display:flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding:0;
+    width:90%;
+}
+
+.tor-kerdes{
+    background:chocolate;
+    color:white;
+    font-weight:bold;
+    padding:20px 10px;
+}
+
+.tor-adat{
+    margin-left:10px;
+    margin-top:20px;
+    margin-bottom:30px;
+    font-size:13px;
+    font-weight:inherit;
+}
+
+.tor-igen-nem{
+    display:flex;
+    justify-content: space-between;
+    margin:10px 10px;
+}
+
+.tor-igen-nem .btn{
+    background:coral;
+    color:#fff;
+    font-weight:bold;
+    padding:10px;
+    border-radius: 20px;
+}
